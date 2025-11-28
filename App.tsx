@@ -1,3 +1,15 @@
+/**
+ * App - Main component for the budgeting application
+ * 
+ * PURPOSE: This component serves as the entry point for the budgeting form,
+ * allowing users to input their savings and expenses.
+ * 
+ * USAGE: Rendered in the main application file to display the budgeting form.
+ * 
+ * @returns The rendered component containing the budgeting form.
+ */
+
+// ============= Imports =============
 import React from 'react';
 import {
   Chart as ChartJS,
@@ -13,18 +25,19 @@ import { Routes, Route, NavLink } from 'react-router-dom';
 import { useBudgetCalculation } from './hooks/useBudgetCalculation';
 import BudgetForm from './components/BudgetForm';
 import ResultsDisplay from './components/ResultsDisplay';
-import CurrencyConverter from './components/CurrencyConverter';
+import FutureBalanceGoalPage from './pages/FutureBalanceGoalPage';
+import HomePage from './pages/HomePage';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-);
+// ============= Type Definitions =============
+// Define any types or interfaces here if needed in the future
 
+// ============= Constants =============
+// Define any constants here if needed in the future
+
+// ============= Helper Functions =============
+// Add any helper functions here if needed in the future
+
+// ============= Main Component =============
 function App() {
   const { inputs, result, error, handleInputChange, handleSubmit } = useBudgetCalculation({
     currentSavings: 2000,
@@ -47,9 +60,9 @@ function App() {
         />
         {result && <ResultsDisplay result={result} />}
       </div>
-      <CurrencyConverter />
     </div>
   );
 }
 
+// ============= Exports =============
 export default App;

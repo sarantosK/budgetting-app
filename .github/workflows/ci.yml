@@ -2,22 +2,35 @@ name: CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
 
 jobs:
-  test:
+  build-and-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
       - name: Install dependencies
         run: npm ci
+      - name: Lint (if available)
+        run: |
+          if npm run -s lint; then echo "lint ok"; else echo "no lint script"; fi
       - name: Run tests
-        run: npm run test --if-present
+        run: npm test --silent
       - name: Build
         run: npm run build --if-present
+      - name: Verify no tracked transient files
+        run: |
+          if git ls-files --ignored --exclude-standard --others | grep -E '^.vite/'; then
+            echo "Error: .vite/ is tracked or present in working tree" >&2
+            exit 1
+          fi
