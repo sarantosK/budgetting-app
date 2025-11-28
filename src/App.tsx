@@ -1,29 +1,8 @@
 import React from 'react';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Routes, Route, NavLink } from 'react-router-dom';
 import { useBudgetCalculation } from './hooks/useBudgetCalculation';
 import BudgetForm from './components/BudgetForm';
 import ResultsDisplay from './components/ResultsDisplay';
 import CurrencyConverter from './components/CurrencyConverter';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-);
 
 function App() {
   const { inputs, result, error, handleInputChange, handleSubmit } = useBudgetCalculation({

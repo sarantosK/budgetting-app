@@ -3,3 +3,10 @@ dist
 build
 coverage
 vite.config.ts
+# Legacy root-level files not used in main app
+App.tsx
+Chart.tsx
+Results.tsx
+script.js
+styles.css
+index.css

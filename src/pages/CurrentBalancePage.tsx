@@ -1,11 +1,8 @@
 import React from 'react';
 import Card from '../components/shared/Card';
 import CurrencyConverter from '../components/currency/CurrencyConverter';
-import { useBalance } from '../contexts/BalanceContext';
 
 export default function CurrentBalancePage() {
-  const { setCurrentBalance, setMonthlyIncome } = useBalance();
-
   return (
     <div className="page">
       <div className="page-header">

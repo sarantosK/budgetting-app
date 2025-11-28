@@ -1,15 +1,15 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import FormField from '../components/inputs/FormField';
 import Card from '../components/shared/Card';
 import Chart from '../components/shared/Chart';
 import { useCurrency } from '../context/CurrencyContext';
-import { formatCurrency, exportSectionToPDF } from '../utils/helpers';
+import { exportSectionToPDF } from '../utils/helpers';
 import CurrencyConverter from '../components/currency/CurrencyConverter';
 
 type BreakdownRow = { label: string; contribution: number; interest: number; balance: number; date: Date };
 
 export default function SavingsGoalPage() {
-  const { currency, symbol } = useCurrency();
+  const { symbol } = useCurrency();
   const [current, setCurrent] = useState(0);
   const [income, setIncome] = useState(2500);
   const [expenses, setExpenses] = useState(1800);
@@ -68,18 +68,6 @@ export default function SavingsGoalPage() {
     setLoading(false);
   };
 
-  const canExport = !!result;
-
-  const summary = useMemo(() => {
-    if (!result) return null;
-    return [
-      { label: 'Months to goal', value: result.months },
-      { label: 'End date', value: result.endDate.toDateString() },
-      { label: 'Total contributions', value: formatCurrency(result.totalContrib, currency) },
-      { label: 'Total interest', value: formatCurrency(result.totalInterest, currency) }
-    ];
-  }, [result, currency]);
-
   return (
     <div className="page">
       <Card>
@@ -118,7 +106,7 @@ export default function SavingsGoalPage() {
         <div ref={resultsRef}>
           <Card>
             <div className="card-title">Month-by-Month</div>
-            <Chart data={result.chart.map((r: any) => ({ label: r.label, value: r.balance }))} />
+            <Chart data={result.chart.map((r) => ({ label: r.label, value: r.balance }))} />
           </Card>
         </div>
       )}
